@@ -1,0 +1,16 @@
+machine:
+  name: "Fibonacci Turing Machine"
+  blank: "B"
+  start_state: "q_check"
+  accept_state: "q_accept"
+transitions:
+  q_check:
+    action: "check_iteration"
+    if_empty: "q_accept"     
+    if_not_empty: "q_add"      
+  q_add:
+    action: "add"
+    next_state: "q_update"
+  q_update:
+    action: "update"
+    next_state: "q_check"
