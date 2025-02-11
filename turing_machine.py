@@ -1,4 +1,3 @@
-# turing_machine.py
 class TuringMachine:
     def __init__(self, config, iteration, A, B):
         """
