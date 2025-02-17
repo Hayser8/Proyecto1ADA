@@ -34,7 +34,7 @@ def exponential_fit(x, a, b):
     return a * np.exp(b * x)
 
 def empirical_analysis(config):
-    test_inputs = list(range(1, 31))  # Prueba hasta n = 40
+    test_inputs = list(range(1, 31))  
     times = []
     
     for n in test_inputs:
@@ -47,7 +47,6 @@ def empirical_analysis(config):
     plt.ylabel("Tiempo (segundos)")
     plt.title("Tiempo de ejecución vs Tamaño de entrada")
     
-    # Ajuste exponencial
     popt, _ = curve_fit(exponential_fit, test_inputs, times, maxfev=10000)
     xs = np.linspace(min(test_inputs), max(test_inputs), 100)
     ys = exponential_fit(xs, *popt)

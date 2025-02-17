@@ -21,12 +21,10 @@ def main():
         if n < 1:
             print("n debe ser al menos 1.")
             return
-        # Configurar la cinta:
-        # Para n<=2 (F(1)=1, F(2)=1) no hay iteración; para n>=3 se realizan n-2 iteraciones.
-        if args.input.isdigit():  # Si el usuario ingresa un número en decimal (ej. "5")
+        if args.input.isdigit():  
             n = int(args.input)
             unary_input = "1" * n
-        else:  # Si ya está en notación unaria
+        else: 
             unary_input = args.input
             n = len(unary_input)
 
@@ -44,7 +42,6 @@ def main():
         print("Ejecutando la simulación...")
         tm.run()
         result_tape = tm.get_tape()
-        # El resultado final se encuentra en el tercer segmento (B)
         result = result_tape.split("#")[2]
         print("Resultado (Fibonacci(n) en representación unaria):", result)
         print("Fibonacci(n) =", len(result))
