@@ -1,6 +1,7 @@
 import time
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.optimize import curve_fit
 from config_loader import load_config
 from turing_machine import TuringMachine
 
@@ -28,9 +29,14 @@ def run_simulation(n, config):
     elapsed = end - start
     return elapsed
 
+def exponential_fit(x, a, b):
+    """Función exponencial para ajuste de curva."""
+    return a * np.exp(b * x)
+
 def empirical_analysis(config):
-    test_inputs = list(range(1, 21))  
+    test_inputs = list(range(1, 31))  # Prueba hasta n = 40
     times = []
+    
     for n in test_inputs:
         t = run_simulation(n, config)
         times.append(t)
@@ -41,10 +47,11 @@ def empirical_analysis(config):
     plt.ylabel("Tiempo (segundos)")
     plt.title("Tiempo de ejecución vs Tamaño de entrada")
     
-    coefficients = np.polyfit(test_inputs, times, 2)
-    poly = np.poly1d(coefficients)
+    # Ajuste exponencial
+    popt, _ = curve_fit(exponential_fit, test_inputs, times, maxfev=10000)
     xs = np.linspace(min(test_inputs), max(test_inputs), 100)
-    ys = poly(xs)
-    plt.plot(xs, ys, color='red', label=f"ajuste: {poly}")
+    ys = exponential_fit(xs, *popt)
+    
+    plt.plot(xs, ys, color='red', label=f"Ajuste exponencial: {popt[0]:.4f} * e^({popt[1]:.4f}x)")
     plt.legend()
     plt.show()
